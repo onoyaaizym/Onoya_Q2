@@ -1,0 +1,107 @@
+import java.util.Scanner;
+
+class PowerLevels {
+
+    public static void main(String[] args) {
+        // Create an object of Scanner class to get an input from the user 
+        Scanner scanner = new Scanner(System.in);
+
+        // To read the 10 Power Levels and store them in an array 
+        int[] powerLevels = new int[10];
+        System.out.println("Enter 10 power levels of creatures: ");
+        for (int i = 0; i < powerLevels.length; i++) {
+            powerLevels[i] = scanner.nextInt();
+        }
+
+        // To sort the array in Ascending Order using Bubble Sort
+        int[] bubbleSorted = powerLevels.clone();
+        bubbleSort(bubbleSorted);
+        System.out.println("\nBubble Sort (Ascending):");
+        displayArray(bubbleSorted);
+
+        // To sort the array in Descending Order using Selection Sort
+        int[] selectionSorted = powerLevels.clone();
+        selectionSort(selectionSorted);
+        System.out.println("\nSelection Sort (Descending):");
+        displayArray(selectionSorted);
+
+        // Analyzing 
+        calculateAnalysis(powerLevels);
+
+        scanner.close();
+    }
+
+    // Sorts the array in Ascending Order
+    public static void bubbleSort(int[] array) {
+        int n = array.length;
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    // Swap array[j] and array[j + 1]
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    swapped = true;
+                }
+            }
+            if (!swapped) break; // Stop if already sorted
+        }
+    }
+
+    // Sorts the array in Descending Order
+    public static void selectionSort(int[] array) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            int maxIndex = i; // Assuming that the current number is the largest 
+            for (int j = i + 1; j < n; j++) {
+                if (array[j] > array[maxIndex]) {
+                    maxIndex = j; // Updates the index of the largest number
+                }
+            }
+            // Swap the largest element with the current element
+            int temp = array[i];
+            array[i] = array[maxIndex];
+            array[maxIndex] = temp;
+        }
+    }
+
+    // Prints all the element in the array
+    public static void displayArray(int[] array) {
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
+
+    // Analyzes the array
+    public static void calculateAnalysis(int[] array) {
+        int sumEven = 0, sumOdd = 0;
+        int min = array[0], max = array[0];
+
+        for (int value : array) {
+            // Check if the number is even or odd and add to the appropriate sum
+            if (value % 2 == 0) {
+                sumEven += value;
+            } else {
+                sumOdd += value;
+            }
+
+            // Find min and max values
+            if (value < min) {
+                min = value;
+            }
+            if (value > max) {
+                max = value;
+            }
+        }
+
+        // Prints the results of the analysis
+        System.out.println("\nAnalysis:");
+        System.out.println("Sum of Even Numbers: " + sumEven);
+        System.out.println("Sum of Odd Numbers: " + sumOdd);
+        System.out.println("Minimum Power Level: " + min);
+        System.out.println("Maximum Power Level: " + max);
+    }
+}
